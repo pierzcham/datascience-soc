@@ -1,4 +1,18 @@
 
+# The School of Commonwealths
+
+The innovative model of the education system in which traditional classroom-based activities are
+transformed into globally connected communication systems (Pierzchalski, 2022). These systems are
+created by linking academic classes with similar topics between any universities worldwide. The
+linking is facilitated using GitHub. In the proposed model, students still study in the halls of the
+university but additionally use the GitHub service to communicate with each other, involving the
+review of assignments/projects analogous to the work of scientists who review each other's
+publications. In this way, students develop critical thinking and foster a culture of
+collaboration. For the new school to function, there is a need for materials that could be utilized
+by lecturers from the combined universities. This website contains materials and instructions to start
+the School of Commonwealths.
+
+
 # The course schedule template
 
 |Date     | Topic                  | Repository      | Submission Deadline | Lecture notes|
