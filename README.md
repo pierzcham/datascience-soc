@@ -16,55 +16,55 @@ start the School of Commonwealths.
 
 1. **Find a partner** from any university worldwide you prefer to combine data science classroom-based
    activities into one communication system.
-2. **Create a GitHub accounut.**
+2. **Create a GitHub account.**
    - If you don’t already have one, create a GitHub account: https://github.com/
 3. **Create an organization on GitHub.**
    - With your GitHub account, create an organization with a Free plan. On your account, choose:
      Settings ➡ Organizations ➡ New orgranization; or click the link: [create your
      organization](https://github.com/account/organizations/new?plan=team_free)
    - Upgrade your organization by clicking the '[Upgrade to GitHub
-	 Team](https://education.github.com/globalcampus/teacher)' button and selecting the organization
-	 you want to upgrade. It is good idea to create as many organizations as the number of courses
-	 you run. (Note: At least one organization owner is required to have a Pro account and must be
-	 verified as a teacher to upgrade an organization for free. You can get a discount for a Pro
-	 account by verifying your teacher status here:
-	 [discount_requests_application](https://education.github.com/discount_requests/application))
+     Team](https://education.github.com/globalcampus/teacher)' button and selecting the organization
+     you want to upgrade. It is good idea to create as many organizations as the number of courses
+     you run. (Note: At least one organization owner is required to have a Pro account and must be
+     verified as a teacher to upgrade an organization for free. You can get a discount for a Pro
+     account by verifying your teacher status here:
+     [discount_requests_application](https://education.github.com/discount_requests/application))
    - Add your partner to your organization as an 'Owner', ensuring that both of you have equal
      rights and full administrative access to the entire organization (in order for a partner to
      fully utilize the course management software, they must be assigned the 'Owner' role).
 4. **Install & set up Git.**
-   - download and install Git: 
-	 - Linux, Mac: https://www.git-scm.com/downloads
-	 - Windows: https://gitforwindows.org/
+   - download and install Git:
+     - Linux, Mac: https://www.git-scm.com/downloads
+     - Windows: https://gitforwindows.org/
    - configure your name and email, which will be used to identify the author of commits:
-	 
-	 ```shell
-	 git config --global user.name "Your Name"
-	 git config --global user.email "your_email@example.com" # this is optional
-	 ```
-	 
+
+   ```shell
+   git config --global user.name "Your Name"
+   git config --global user.email "your_email@example.com" # this is optional
+   ```
+
 5. **Install & set up GitHub CLI**
    - download and install GitHub CLI (gh): https://cli.github.com/
    - log in to GitHub and grant gh additional permissions. When prompted for
-     your preferred protocol for Git operations, select HTTPS, and when asked if
-     you would like to authenticate to Git with your GitHub credentials, enter
-     Y. With that, the GitHub CLI will automatically store your Git credentials
-     for you, so that you don't have to enter your credentials for every
-     operation requiring authorization.
-	 
-	 ```shell
-	 gh auth login --scopes admin:org,delete_repo,project
-	 ```
-   
+    your preferred protocol for Git operations, select HTTPS, and when asked if
+    you would like to authenticate to Git with your GitHub credentials, enter
+    Y. With that, the GitHub CLI will automatically store your Git credentials
+    for you, so that you don't have to enter your credentials for every
+    operation requiring authorization.
+
+   ```shell
+   gh auth login --scopes admin:org,delete_repo,project
+   ```
+
 6. **Install [the extension to manage the SoC](https://github.com/pierzcham/gh-soc)**:
-  
-    ```shell
-    gh extension install pierzcham/gh-soc
-    ```
-  
+
+   ```shell
+   gh extension install pierzcham/gh-soc
+   ```
+
 7. **Install GitHub App 'Czujnikownia'.**
    - With your GitHub account, install https://github.com/apps/czujnikownia. This app is used to
-     record the times of submitting assignments and reviews to which students have been assigned.
+   record the times of submitting assignments and reviews to which students have been assigned.
 
 # Let's start
 
@@ -73,131 +73,137 @@ start the School of Commonwealths.
    ```shell
    gh soc init
    ```
-   
+
    The `init` command creates configuration files `user_config.sh`, `source_config.sh`,
    `system_config.sh`, and an additional file for student emails named `emails.txt`. It also creates
    a folder named 'logs' to store JSON data files.
-   
+
    - Adjust the settings in the `user_config.sh` file, which already contains default values, to
    your preferences.
-   
+
    ```shell
    GH_ORG_NAME='' # insert here your GitHub organization name
    GH_TEAM_NAME='SOC-DS'
    GH_TEAM_DESCRIPTION='SoC Data Science Course'
-   TARGET_REPO_DESCRIPTION='SoC Data Science Course'
    GH_TEAM_MEMBERS_EXCLUDED_FROM_REVIEWING=()
+   TARGET_REPO_DESCRIPTION='SoC Data Science Course'
    TARGET_REPOS=(...) # for default values, look in the file
    TARGET_PROJECT_TITLE='Monitor-SoC-DS'
    ```
-   
+
    - Add your students' emails to `emails.txt`. This file will be used by `open` command to send
    invitations to join your GitHub organization 'GH\_ORG\_NAME' and automatically add them to the
    team 'GH\_TEAM\_NAME'.
-   
+
    Any time you can run a precheck before each use of other commands to make sure your environment
    is ready to run.
-   
+
    ```shell
    gh soc precheck
    ```
-   
+
 2. **Synchronize the SoC Data Science Course with the source repositories.**
 
    ```shell
    gh soc sync
    ```
-   
-   This command forks the source repositories containing the materials for datascience course and
-   listed in the `source_config.sh` file (defined as 'SOURCE\_REPOS') to your GitHub organization
-   'GH\_ORG\_NAME'. The forked repositories will be named according to the settings in the
-   `user_config.sh` file (defined as 'TARGET\_REPOS').
-   
-   At any time, you can unsynchronize your course from the source repositories
-   by deleting all the repositories forked from that source. 
-   
+
+   This command creates a [GitHub
+   project](https://docs.github.com/en/issues/planning-and-tracking-with-projects) titled
+   'TARGET\_PROJECT\_TITLE' from the 'SOURCE\_PROJECT\_OWNER' GitHub account, as specified in
+   `source_config.sh`. This project is used to gather information on work progress. Subsequently,
+   repositories with names defined in 'TARGET\_REPOS' array in the `user_config.sh` file are created
+   based on the template repostories defined in 'SOURCE\_REPOS' array in the `source_config.sh`
+   file. If the source repositories are not already templates, it will attempt to convert them. This
+   is useful if you want to use your own repositories as a source and automatically convert them to
+   templates.
+
+   At any time, you can unsynchronize your course from the source repositories by deleting project
+   and all the repositories forked from that source .
+
    ```shell
    gh soc unsync
    ```
-   
+
 3. **Open the SoC Data Science Course**
 
    ```shell
    gh soc open
    ```
-   
+
    Opening a course involves, in addition to making some necessary organizational settings, creating
    a 'GH_TEAM_NAME' team to which students will be added after they accept the invitations to join
-   the organization sent during this course opening operation. Team settings are adjusted here to
-   ensure the mechanism for the automatic selection of a reviewer functions properly. Individuals
-   excluded from reviewing, such as teachers, are listed in
-   'GH\_TEAM\_MEMBERS\_EXCLUDED\_FROM\_REVIEWING'. Subsequently, a [GitHub
-   project](https://docs.github.com/en/issues/planning-and-tracking-with-projects) titled
-   'TARGET\_PROJECT\_TITLE' is created based on the template number 'SOURCE\_PROJECT\_NUMBER' from
-   the 'SOURCE\_PROJECT\_OWNER' account, as specified in `source_config`. This project is utilized
-   to gather information on work progress. At this stage, task repositories are cloned to a local
-   folder. Finally, repositories containing tasks are configured to protect them against
-   modifications by students – the main branch is locked. Students are required to fork the
-   repository to their account in order to make their changes.
-   
+   the organization sent by the `invite` command. Team settings are adjusted here to ensure the
+   mechanism for the automatic selection of a reviewer functions properly. Individuals excluded from
+   reviewing, such as teachers, are listed in 'GH\_TEAM\_MEMBERS\_EXCLUDED\_FROM\_REVIEWING'. At
+   this stage, task repositories are cloned to a local folder. Next, repositories containing tasks
+   are configured to protect them against modifications by students – the main branch is
+   locked. Students are required to fork the repository to their account in order to make their
+   changes. Finally, the GitHub Pages for the course is enabled and accessible from the web.
+
    At any time you can close your course.
-	
-	```shell
-	gh soc close
-	```
-	
-	The `close` command concludes a course by archiving project data and optionally deleting the
-    team associated with the course. When deleting a team, you can optionally remove team members
-    from your organization.
-	
-4. **Run your SoC Data Science Course by assigning tasks to your team one at a time.**
 
-	```shell
-	gh soc assign <repository name> # e.g. gh soc assign soc-datascience-hello
-	```
-
-	At any time, you can unassign the repository from your team.
-	
-	```shell
-	gh soc unassign <repository name>
-	```
-
-	Morover, you can save the current state of your team's progress.
-	
-	```shell
-	gh soc log
-	```
-	
-	The `log` commnad captures and logs the current state of a specified GitHub project
-    'TARGET\_PROJECT\_TITLE' into a JSON file for archival or potential analysis purposes.
-
-	Using the `status` command, you can list the repositories that you have
-    already added to your team.
-
-    ```shell
-	gh soc status
-	```
-
-5. **If the SoC Data Science Course was opened at least once within the same
-   GitHub organization, you can reopen it there.**
-   
    ```shell
-   gh soc reopen
+   gh soc close
    ```
-   
-   The `reopen` command performs the same actions as `open`, except that it does not require prior
-   synchronization with 'SOURCE\_REPOS'. Instead, it creates repositories from 'TARGET\_REPOS'
-   templates. The new 'SUCCESSOR\_REPOS' repositories will include the prefix
-   'SUCCESSOR\_REPOS\_SUFFIX' in their names, which, by default, is set to the year in which these new
-   repositories are created, for example, 'soc-datascience-hello-2025'."
+
+   The `close` command concludes a course by archiving project data and optionally deleting the
+   team associated with the course. When deleting a team, you can optionally remove team members
+   from your organization.
+
+4. **Invite students to join the course**
+
+
+   Sends invitations to students using the email addresses listed in the `emails.txt` file
+
+   ```shell
+   gh soc invite
+   ```
+
+   The command below deletes the invitations for students based on the email
+   addresses found in the
+
+   `emails.txt` file.
+
+   ```shell
+   gh soc disinvite
+   ```
+
+5. **Run your SoC Data Science Course by assigning tasks to your team one at a time.**
+
+   ```shell
+   gh soc assign <repository name> # e.g. gh soc assign soc-datascience-hello
+   ```
+
+   At any time, you can unassign the repository from your team.
+
+   ```shell
+   gh soc unassign <repository name>
+   ```
+
+   Moreover, you can save the current state of your team's progress.
+
+   ```shell
+   gh soc log
+   ```
+
+   The `log` commnad captures and logs the current state of a specified GitHub project
+   'TARGET\_PROJECT\_TITLE' into a JSON file for archival or potential analysis purposes.
+
+   Using the `status` command, you can list the repositories that you have
+   already added to your team.
+
+   ```shell
+   gh soc status
+   ```
 
 6. **If you no longer need the SoC, you can delete it, which entails deleting
    your GitHub organization.**
-   
+
    ```shell
    gh soc delete
    ```
-   
+
 # The course schedule template
 
 |Date | Topic | Repository for lab & home activities | Submission deadline | Lecture notes|
